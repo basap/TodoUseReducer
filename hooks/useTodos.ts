@@ -5,24 +5,15 @@ type Action =
   | { type: "ADD_TODO"; text: string }
   | { type: "TOGGLE_TODO"; index: number }
 
-const todosReducer = (state: Todo[], action: Action): Todo[] => {
+const todoReducer = (state: Todo[], action: Action): Todo[] => {
     switch (action.type) {
       case "ADD_TODO":
-        return [
-            ...state,
-            {
-                id: Date.now().toString(),
-                text: action.text,
-                done: false
-            },
-        ];
+        return [...state, { id: Date.now().toString(), text: action.text, done: false}];
 
       case "TOGGLE_TODO":
         return state.map((todo, index) =>
-          index === action.index
-            ? { ...todo, done: !todo.done }
-            : todo
-        );
+          index === action.index ? { ...todo, done: !todo.done } : todo 
+      );
 
       default:
         throw new Error();
@@ -30,7 +21,7 @@ const todosReducer = (state: Todo[], action: Action): Todo[] => {
 };
 
 export const useTodos = () => {
-    const [todos, dispatch] = useReducer(todosReducer, []);
+    const [todos, dispatch] = useReducer(todoReducer, []);
 
     const addTodo = (text: string) => {
       if (!text.trim()) return;
